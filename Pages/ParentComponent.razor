@@ -1,0 +1,26 @@
+﻿@page "/counter"
+
+
+<h3>ParentComponent</h3>
+
+<p>
+    Current Count: @currentCount
+</p>
+
+
+@* The SetCurrentCount = is InvokeAsync from the Counter component and the yellow name is called from
+   the property below it doesn't have to be the same name 
+   This is event callback it is different because we are calling it from the parent component
+   Delagating is an action type which does not work because it does not re-render, but if you want to use 
+   an action type then you must add the StateHasChange();
+*@
+<Counter SetCurrentCount="SetCurrentCount"></Counter>
+
+@code {
+    private int currentCount;
+
+    private void SetCurrentCount(int value)
+    {
+        currentCount = value;
+    }
+}

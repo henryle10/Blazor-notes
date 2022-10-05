@@ -1,0 +1,40 @@
+﻿
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<br />
+
+<CascadingValue Name="Counter" Value="@currentCount">
+    @* IsFixed property helps with performance and CascadingValue is to pass down information 
+        Cannot pass parameters up only down (Like a tree and these are the leaves). Use it 
+        sparingly because it can get confusing
+    *@
+    <CascadingValue Name="TitleColor" Value="@("blue")" IsFixed="true">
+        <Component1></Component1>
+    </CascadingValue>
+</CascadingValue>
+<br />
+
+<button class="button" @onclick="(() =>
+{
+    dialog.Show();
+})">Show Dialog</button>
+<br />
+<DialogComponent @ref="dialog"></DialogComponent>
+
+@code {
+    private DialogComponent dialog;
+
+    [Parameter]
+    public EventCallback<int> SetCurrentCount { get; set; }
+
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+        SetCurrentCount.InvokeAsync(currentCount);
+    }
+}

@@ -1,0 +1,63 @@
+﻿@page "/validation"
+
+@using System.ComponentModel.DataAnnotations
+
+@*
+    This is how to validate a form note that you need to use the system data annotations above
+    make sure bind-Value the v is capitalize
+*@
+<br />
+<EditForm Model="human" OnInvalidSubmit="ValidFormSubmitted">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <label>
+        First Name:<br />
+        <InputText id="fname" @bind-Value="human.FirstName"></InputText>
+    </label>
+    <br />
+    <label>
+        Last Name:<br />
+        <InputText id="lname" @bind-Value="human.LastName"></InputText>
+    </label>
+    <br />
+    <label>
+        Empolyee Number:<br />
+        <InputNumber id="emp_number" @bind-Value="human.EmployeeNumber"></InputNumber>
+    </label>
+    <br />
+    <label>
+        Email:<br />
+        <InputText id="email" @bind-Value="human.Email"></InputText>
+    </label>
+    <br />
+    <br />
+    <input type="submit" value="Submit"/>
+</EditForm>
+
+@code {
+    Human human = new Human();
+
+    private void ValidFormSubmitted()
+    {
+
+    }
+
+    class Human
+    {
+        [Required]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Required]
+        [Range(1, 1000)]
+        public int EmployeeNumber { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}
